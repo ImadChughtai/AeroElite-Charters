@@ -120,19 +120,18 @@ const Home = () => {
               </Grid>
             ))}
           <Grid item lg={12} md={12} sm={12} xs={12} className="searchTripsTxt">
-            {!airportFrom &&
-              Array.isArray(data?.result) &&
-              !data?.result?.length &&
-              !loading && <Typography>Search Trips Now!</Typography>}
+            {!airportFrom && !data?.result?.length && !loading && (
+              <Typography>Search Trips Now!</Typography>
+            )}
             {loading && <CircularProgress />}
+            {!loading &&
+              data?.result &&
+              (!Array.isArray(data?.result) || !data?.result?.length) &&
+              "trips" in data.result &&
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              !data?.result?.trips?.length &&
+              "No trips found!"}
           </Grid>
-          {!loading &&
-            data?.result &&
-            (!Array.isArray(data?.result) || !data?.result?.length) &&
-            "trips" in data.result &&
-            !Array.isArray(data?.result?.trips) &&
-            !data?.result?.trips &&
-            "No trips found!"}
         </Grid>
       </Grid>
     </Grid>

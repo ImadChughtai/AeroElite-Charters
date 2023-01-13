@@ -47,7 +47,8 @@ interface TripApiResponse {
 }
 
 export interface Result {
-  trips: Trip[];
+  [x: string]: any;
+  trips: Trip[] | any;
   recommendationTrips: unknown[];
   tripAlertSent: unknown[];
 }

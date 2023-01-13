@@ -9,8 +9,8 @@ import Button from "../../Components/Base/Button";
 import dateFunc from "../../Configs/dateFunc";
 import { searchTrips } from "../../Apis/services";
 import TripCard from "../../Components/Base/Card";
-import "./index.css";
 import { TripApiResponse } from "../../Utils/Types/api.types";
+import "./index.css";
 
 type OptionsProps = { label: string; id: number };
 
@@ -25,10 +25,12 @@ const Home = () => {
 
   const searchTripFunc = async () => {
     setLoading(true);
+    // const d = dateValue && dateValue.toISOString()?.split("T")?.[0];
     try {
       const result = await searchTrips({
         airportId1: airportFrom?.id,
         airportId2: airportTo?.id,
+        // departureDate: d,
       });
       setData(result?.data);
     } catch (err) {
@@ -100,6 +102,7 @@ const Home = () => {
           </Grid>
         </Grid>
       </Grid>
+
       <Grid container className="cardsDiv">
         <Grid spacing={4} container lg={8} md={8} sm={10} xs={12}>
           {Array.isArray(data?.result) &&
@@ -110,6 +113,7 @@ const Home = () => {
                 <TripCard data={d} />
               </Grid>
             ))}
+
           {data &&
             "trips" in data.result &&
             Array.isArray(data?.result?.trips) &&
@@ -119,10 +123,9 @@ const Home = () => {
                 <TripCard data={d} />
               </Grid>
             ))}
+
           <Grid item lg={12} md={12} sm={12} xs={12} className="searchTripsTxt">
-            {!airportFrom && !data?.result?.length && !loading && (
-              <Typography>Search Trips Now!</Typography>
-            )}
+            {!data && <Typography>Search Trips Now!</Typography>}
             {loading && <CircularProgress />}
             {!loading &&
               data?.result &&
